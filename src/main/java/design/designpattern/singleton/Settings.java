@@ -1,22 +1,28 @@
 package design.designpattern.singleton;
 
-// 외부에서 new를 통해 해당 클래스의 인스턴스를 생성하지 못하도록 기본 생성자를 private으로 설정한다.
-public class Settings {
+import java.io.Serializable;
 
-    private static Settings instance = new Settings();
+public class Settings {
 
     private Settings() {}
 
-//    public static Settings getInstance() {
-//        // 멀티 스레딩에서는 해당 조건문에서 경쟁이 발생하여 여러 인스턴스가 생길 여지가 있다.
-//        if (instance == null)
-//            instance = new Settings();
-//        return instance;
-//    }
+    private static class SettingsHolder {
+        public static final Settings instance = new Settings();
+    }
 
-    public static synchronized Settings getInstance() {
-        if (instance == null)
-            instance = new Settings();
-        return instance;
+    public static Settings getInstance() {
+        return SettingsHolder.instance;
     }
 }
+
+/*
+싱글톤을 구현하는 방법
+1. static 멤버 변수와 static 메소드로 구현하기
+2. inner class로 구현하기
+3. static final 멤버 변수로 구현하기
+4. Enum으로 구현하기
+
+싱글톤을 파홰하는 방법
+1. 리플렉션을 사용한다.
+2. 직렬화 역직렬화를 수행한다.
+ */
